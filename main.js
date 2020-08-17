@@ -18,16 +18,18 @@
 
 
 
-const forkIcon = document.querySelector('.fa-utensils');
+const title = document.querySelector('.title');
+const input = document.querySelector('.title-show');
 document.querySelector('.search').addEventListener('click', animateSearch);
 
 function animateSearch(e) {
-  console.log('ok')
-  document.querySelector('.title-show').style.animation = 'letter 3s ease-in-out alternate';
-  document.querySelector('.title-show').style.animationFillMode = 'forwards';
+  input.classList.add('input-active');
   document.querySelectorAll('.title-hide').forEach(span => {
     span.style.display = 'none';
-    // span.style.animation = 'title 3s ease-in-out';
-    // span.style.animationFillMode = 'forwards';
-  })
-}
+  });
+};
+
+input.addEventListener('animationstart', () => {
+  title.querySelector('.svg-inline--fa').classList.add('icon-active');
+  input.focus();
+})
