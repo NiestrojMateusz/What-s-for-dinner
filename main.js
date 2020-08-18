@@ -11,7 +11,8 @@ function animateSearch(e) {
   document.querySelectorAll('.title-hide').forEach(span => {
     span.style.display = 'none';
   });
-  revealButton.classList.add('search-hide');
+  // revealButton.classList.add('search-hide');
+  revealButton.style.display = 'none';
 };
 
 // API download
@@ -29,8 +30,47 @@ async function apiFunc() {
 }
   );  
   const data = await dataFetch.json();
-  console.log(data.results);
+  const recipes = data.results;
+
+  // Get recipe ID
+
+  let recipesId = [];
+  recipes.forEach(recipe => {
+    let id = recipe.id;
+    recipesId.push(id);
+  });
+
+  getRecipesInfo(recipesId);
 };
+
+// Get recipe info
+
+async function getRecipesInfo(arrayId) {
+  const resipesInfo = [];
+  arrayId.forEach(id => {
+    const dataFetch = await fetch(`https://api.spoonacular.com/recipes/${id}?${apiKey}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      }
+    }
+      );  
+      const data = await dataFetch.json();
+      resipesInfo.push(data);
+  })
+}
+
+// Changing vue to searched recipes
+
+function revealRecpies() {
+  // apiFunc();
+  recipeVue();
+}
+
+function recipeVue() {
+  searchInput.value = '';
+}
 
 
 
@@ -41,4 +81,4 @@ searchInput.addEventListener('animationstart', () => {
  searchBtn.classList.add('icon-active');
   searchInput.focus();
 });
-searchBtn.addEventListener('click', apiFunc);
+searchBtn.addEventListener('click', revealRecpies);

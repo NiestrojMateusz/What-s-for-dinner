@@ -62,6 +62,7 @@ body {
   border: none;
   background: none;
   cursor: pointer;
+  outline: none;
 }
 
 .fa-search {
@@ -86,17 +87,57 @@ body {
   font-weight: 200;
 }
 
-.search-hide {
+/* .search-hide {
   animation: buttonHide 0.3s  forwards;
   pointer-events: none;
   z-index: -10;
-}
+} */
 
 .fa-utensils {
   animation: iconShake 3s ease-in-out infinite;
   color: rgb(255, 255, 255);
   font-size: 1.7rem;
 }
+
+.recipes-container {
+  display: flex;
+  flex-flow: row  wrap;
+  justify-content: center;
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 80%;
+  height: 75vh;
+  /* background-color: #5c6e60e7; */
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.recipe {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.877);
+  height: 500px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.recipe img {
+  margin: 10px;
+  width: 30%;
+  flex-grow: 1;
+}
+
+::-webkit-scrollbar {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.863);
+  border-radius: 10px;
+  outline: 1px solid slategrey;
+}
+  
 
 @keyframes letterInput {
   from {width: 27px; height: 35px; margin-top: -4px;}
