@@ -55,32 +55,48 @@ body {
   animation: letterInput 3s ease alternate forwards;
 }
 
-.fa-search {
+.search {
   position: absolute;
   top: -150px;
   margin-left: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.fa-search {
   font-size: 3rem;
 }
 
 .icon-active {
-  animation: iconDrop 2s 2s ease-in-out forwards;
+  animation: iconDrop 2s 1s ease-in-out forwards;
 }
 
-.search {
-  background: none;
+.reveal-input {
+  background: rgba(240, 0, 1, 0.91);
+  width: 200px;
+  padding: 10px;
   border: none;
+  border-radius: 5px;
   margin-top: 100px;
-  font-size: 5rem;
+  font-size: 2rem;
   outline: none;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.87);
-  animation: iconShake 3s ease-in-out 3;
+  font-weight: 200;
 }
 
-/* @keyframes letter {
-  0%,30% {width: 27px; height: 35px; margin-top: -4px;}
-  70%,100% {width: 30vw; height: 50px; margin-top: -8px; padding-left: 10px;}
-} */
+.search-hide {
+  animation: buttonHide 0.3s  forwards;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.fa-utensils {
+  animation: iconShake 3s ease-in-out infinite;
+  color: rgb(255, 255, 255);
+  font-size: 1.7rem;
+}
 
 @keyframes letterInput {
   from {width: 27px; height: 35px; margin-top: -4px;}
@@ -100,4 +116,12 @@ body {
   70% {transform: rotate(7deg) ;}
   80% {transform: rotate(15deg);}
   100% {transform: rotate(0);}
+}
+
+@keyframes buttonHide {
+  0% {opacity: 1;}
+  25% {opacity: 0.7;}
+  50% {opacity: 0.5;}
+  75% {opacity: 0.2;}
+  100% {opacity: 0;}
 }
