@@ -120,12 +120,80 @@ body {
   border-radius: 5px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.recipe img {
-  margin: 10px;
+.recipe-img {
   width: 30%;
-  flex-grow: 1;
+  height: 50%;
+  background-image: url("https://spoonacular.com/recipeImages/716429-556x370.jpg");
+  background-size: cover;
+  margin: 15px 20px;
+}
+
+.recipe-info {
+  width: 60%;
+  height: 50%;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-title {
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.recipe-time {
+  margin-top: 40px;
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.recipe-time svg {
+  margin-right: 15px;
+}
+
+.recipe-link {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipe-link a {
+  text-decoration: none;
+  color: rgba(24, 114, 24, 0.87);
+  font-size: 1.5rem;
+}
+
+.recipe-nutrition {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.nutrition-fact {
+  font-size: 1.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.false-fact {
+  padding: 3px 70px;
+  background-color: rgba(255, 0, 0, 0.685);
+  border-radius: 5px;
+  z-index:5;
+  margin-top: -50px;
+  transform: rotate(40deg);
+  display: none;
 }
 
 ::-webkit-scrollbar {
@@ -165,4 +233,9 @@ body {
   50% {opacity: 0.5;}
   75% {opacity: 0.2;}
   100% {opacity: 0;}
+}
+
+@keyframes color {
+  from {color:black}
+  to{color: red}
 }

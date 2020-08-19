@@ -45,21 +45,21 @@ async function apiFunc() {
 
 // Get recipe info
 
-async function getRecipesInfo(arrayId) {
-  const resipesInfo = [];
-  arrayId.forEach(id => {
-    const dataFetch = await fetch(`https://api.spoonacular.com/recipes/${id}?${apiKey}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      }
-    }
-      );  
-      const data = await dataFetch.json();
-      resipesInfo.push(data);
-  })
-}
+// async function getRecipesInfo(arrayId) {
+//   const resipesInfo = [];
+//   arrayId.forEach(id => {
+//     const dataFetch = await fetch(`https://api.spoonacular.com/recipes/${id}?${apiKey}`,
+//     {
+//       method: "GET",
+//       headers: {
+//         Accept: "application/json",
+//       }
+//     }
+//       );  
+//       const data = await dataFetch.json();
+//       resipesInfo.push(data);
+//   })
+// }
 
 // Changing vue to searched recipes
 
