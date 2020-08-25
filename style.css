@@ -126,7 +126,7 @@ body {
 .recipe-img {
   width: 30%;
   height: 50%;
-  background-image: url("https://spoonacular.com/recipeImages/716429-556x370.jpg");
+  /* background-image: url("https://spoonacular.com/recipeImages/716429-556x370.jpg"); */
   background-size: cover;
   margin: 15px 20px;
 }
@@ -193,7 +193,6 @@ body {
   z-index:5;
   margin-top: -50px;
   transform: rotate(40deg);
-  display: none;
 }
 
 ::-webkit-scrollbar {
