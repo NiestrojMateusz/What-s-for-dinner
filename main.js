@@ -4,6 +4,7 @@ const searchInput = document.querySelector('.title-show');
 const searchIcon = document.querySelector('.fa-search');
 const searchBtn = document.querySelector('.search');
 const revealButton = document.querySelector('.reveal-input');
+const recipesContainer = document.querySelector('.recipes-container');
 
 const test = {}
 
@@ -14,7 +15,6 @@ function animateSearch(e) {
   document.querySelectorAll('.title-hide').forEach(span => {
     span.style.display = 'none';
   });
-  // revealButton.classList.add('search-hide');
   revealButton.style.display = 'none';
 };
 
@@ -24,6 +24,13 @@ const apiKey = "&apiKey=194c879ee3354f51bfca24dfb859cd08";
 let recipesId= [];
 
 async function apiFunc() {
+  // Add loading animation
+
+  const loadIcon = document.createElement('i');
+  loadIcon.classList.add('fas', 'fa-spinner');
+  loadIcon.classList.toggle('loading-active');
+  recipesContainer.appendChild(loadIcon);
+
   const searchValue = searchInput.value;
   const dataFetch = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${searchValue}${apiKey}`,
 {
@@ -37,14 +44,13 @@ async function apiFunc() {
   const recipes = data.results;
 
   // Get recipe ID
-
  
   recipes.forEach(recipe => {
     let id = recipe.id;
     recipesId.push(id);
   });
 
-  // getRecipesInfo(recipesId);
+  getRecipesInfo(recipesId);
 };
 
 // Get recipe info
@@ -66,19 +72,21 @@ const getRecipesInfo = async arrayId => {
       recipesInfo.push(data);
   }
   recipeView(recipesInfo);
-  // console.log(recipesInfo[0]);
   }
   
 // Changing view to searched recipes
 
 function revealRecpies() {
-  // apiFunc();
-  // recipeView();
   searchInput.value = '';
+  recipesContainer.innerHTML = '';
+  // apiFunc();
 }
 
 function recipeView(infoArray) {
-  const recipesContainer = document.querySelector('.recipes-container');
+  
+  recipesContainer.innerHTML = '';
+  
+  
   infoArray.forEach(info => {
     const recipeSection = document.createElement('section');
     recipeSection.classList.add('recipe');
@@ -169,7 +177,7 @@ function recipeView(infoArray) {
     if(!nutritionFacts[3]) {
       const fact = document.createElement('span');
       fact.classList.add('nutrition-fact');
-      fact.innerHTML = `<i class="fas fa-heartbeat"></i>  <span class='false-fact'></span>`;
+      fact.innerHTML = `<i class="fas fa-heartbeat"></i> Healthy <span class='false-fact'></span>`;
       recipeNutrition.appendChild(fact);
     } else if(nutritionFacts[3]) {
       const fact = document.createElement('span');
@@ -181,11 +189,12 @@ function recipeView(infoArray) {
     if(nutritionFacts[4] >= 0) {
       const fact = document.createElement('span');
       fact.classList.add('nutrition-fact');
-      fact.innerHTML = `<span class="score">${nutritionFacts[4]}</span> Health Score `;
+      fact.style.fontSize = '1.5rem';
+      fact.style.marginTop = '-10px';
+      fact.innerHTML = `<span class="score" style="font-weight:bold;font-size:1.8rem">${nutritionFacts[4]}</span> Health Score `;
       recipeNutrition.appendChild(fact);
     };
-
-  })
+  });
 }
 
 recipeView([data]);
@@ -193,6 +202,11 @@ recipeView([data]);
 // Event listeners and invokes
 
 revealButton.addEventListener('click', animateSearch);
+searchInput.addEventListener('keypress', e => {
+  if(e.keyCode === 13) {
+    revealRecpies();
+  }
+});
 searchInput.addEventListener('animationstart', () => {
  searchBtn.classList.add('icon-active');
   searchInput.focus();

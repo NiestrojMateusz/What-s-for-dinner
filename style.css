@@ -52,7 +52,7 @@ body {
 }
 
 .input-active {
-  animation: letterInput 3s ease alternate forwards;
+  animation: letterInput 1.5s ease alternate forwards;
 }
 
 .search {
@@ -70,7 +70,7 @@ body {
 }
 
 .icon-active {
-  animation: iconDrop 2s 1s ease-in-out forwards;
+  animation: iconDrop 1.7s 0.5s ease-in-out forwards;
 }
 
 .reveal-input {
@@ -87,12 +87,6 @@ body {
   font-weight: 200;
 }
 
-/* .search-hide {
-  animation: buttonHide 0.3s  forwards;
-  pointer-events: none;
-  z-index: -10;
-} */
-
 .fa-utensils {
   animation: iconShake 3s ease-in-out infinite;
   color: rgb(255, 255, 255);
@@ -107,7 +101,6 @@ body {
   overflow-x: hidden;
   width: 80%;
   height: 75vh;
-  /* background-color: #5c6e60e7; */
   margin: 0 auto;
   margin-top: 30px;
 }
@@ -126,7 +119,6 @@ body {
 .recipe-img {
   width: 30%;
   height: 50%;
-  /* background-image: url("https://spoonacular.com/recipeImages/716429-556x370.jpg"); */
   background-size: cover;
   margin: 15px 20px;
 }
@@ -195,6 +187,13 @@ body {
   transform: rotate(40deg);
 }
 
+.loading-active {
+  display: inline-block;
+  position: absolute;
+  font-size: 3rem;
+  animation: loading 3s ease-in-out infinite;
+}
+
 ::-webkit-scrollbar {
   background: none;
 }
@@ -237,4 +236,9 @@ body {
 @keyframes color {
   from {color:black}
   to{color: red}
+}
+
+@keyframes loading {
+  from {transform: rotate(0);}
+  to {transform: rotate(360deg);}
 }
