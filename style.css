@@ -51,6 +51,64 @@ body {
   font-size: 2rem;
 }
 
+.hamburger {
+  position: absolute;
+  z-index: 5;
+  left: -45px;
+  top: 10px;
+}
+
+.line1,
+.line2 {
+  height: 4px;
+  width: 40px;
+  background-color: rgb(0, 0, 0);
+  margin-bottom: 3px;
+}
+
+.line1-active {
+  transform: rotate(-45deg) translateY(4px) translateX(-3px);
+  transition: transform 0.5s ease-in-out;
+}
+
+.line2-active {
+  transform: rotate(45deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.library {
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  right: 0;
+  background-color: rgb(252, 55, 94);
+  z-index: 3;
+}
+
+.saved-recipe {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+}
+
+.saved-img {
+  width: 30%;
+}
+
+.saved-title {
+  font-size: 1.4rem;
+  flex-basis: 30%;
+}
+
+.saved-link {
+  flex-basis: 10%;
+  font-size: 25px;
+  font-size: 1.8rem;
+  color: rgb(0, 0, 0);
+}
+
 .input-active {
   animation: letterInput 1.5s ease alternate forwards;
 }
@@ -76,7 +134,7 @@ body {
 .reveal-input {
   background: rgba(240, 0, 1, 0.91);
   width: 200px;
-  padding: 10px;
+  padding: 20px 10px;
   border: none;
   border-radius: 5px;
   margin-top: 100px;
@@ -85,6 +143,7 @@ body {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.87);
   font-weight: 200;
+  box-shadow: 10px 10px 31px 0px rgb(3, 3, 3);
 }
 
 .fa-utensils {

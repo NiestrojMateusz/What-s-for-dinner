@@ -5,6 +5,7 @@ const searchIcon = document.querySelector('.fa-search');
 const searchBtn = document.querySelector('.search');
 const revealButton = document.querySelector('.reveal-input');
 const recipesContainer = document.querySelector('.recipes-container');
+const hamburgerBtn = document.querySelector('.hamburger');
 
 const test = {}
 
@@ -207,6 +208,13 @@ function recipeView(infoArray) {
   });
 }
 
+function libraryReveal() {
+  const line1 = document.querySelector('.line1');
+  const line2 = document.querySelector('.line2');
+  line1.classList.toggle('line1-active');
+  line2.classList.toggle('line2-active');
+}
+
 recipeView([data]);
 
 // Event listeners and invokes
@@ -222,5 +230,6 @@ searchInput.addEventListener('animationstart', () => {
   searchInput.focus();
 });
 searchBtn.addEventListener('click', revealRecpies);
+hamburgerBtn.addEventListener('click', libraryReveal)
 
 export default test;
