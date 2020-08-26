@@ -15,7 +15,7 @@ function animateSearch(e) {
   document.querySelectorAll('.title-hide').forEach(span => {
     span.style.display = 'none';
   });
-  revealButton.style.display = 'none';
+     revealButton.style.display = 'none';
 };
 
 // API download
@@ -27,7 +27,7 @@ async function apiFunc() {
   // Add loading animation
 
   const loadIcon = document.createElement('i');
-  loadIcon.classList.add('fas', 'fa-spinner');
+  loadIcon.classList.add('fas','fa-spinner');
   loadIcon.classList.toggle('loading-active');
   recipesContainer.appendChild(loadIcon);
 
@@ -130,7 +130,17 @@ function recipeView(infoArray) {
     const hrefValue = info.sourceUrl;
     link.setAttribute('href',hrefValue);
     link.setAttribute('target', "_blank");
-    link.innerHTML = `<i class="fas fa-link"></i> Go to recipe`
+    link.innerHTML = `<i class="fas fa-link"></i> Go to recipe`;
+
+    const transfer = document.createElement('div');
+    transfer.classList.add('transfer-recipe');
+    const libraryIcon = document.createElement('button');
+    libraryIcon.innerHTML = '<i class="fas fa-plus"></i>';
+    const libraryDesc = document.createElement('p');
+    libraryDesc.innerText = 'Add to library';
+    transfer.appendChild(libraryIcon);
+    transfer.appendChild(libraryDesc);
+    recipeLink.appendChild(transfer);
     recipeInfo.appendChild(recipeLink);
 
     const recipeNutrition = document.createElement('div');
