@@ -214,9 +214,6 @@ function recipeView(infoArray) {
     btn.addEventListener('click', e => {
       let buttonTarget = (e.target.parentElement.parentElement)
       if(buttonTarget.classList.contains(`recipe${index}`)) {
-        
-        console.log(buttonTarget);
-      
         const savedRecipe = document.createElement('div');
         savedRecipe.classList.add('saved-recipe');
         library.appendChild(savedRecipe);
@@ -233,6 +230,14 @@ function recipeView(infoArray) {
         savedLink.setAttribute('href', infoArray[index].sourceUrl);
         savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
         savedRecipe.appendChild(savedLink);
+        const deleteSaved = document.createElement('button');
+        deleteSaved.classList.add('delete-saved');
+        deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
+        savedRecipe.appendChild(deleteSaved);
+        deleteSaved.addEventListener('click', e => {
+          const recipeContainer = e.target.parentElement.parentElement.parentElement;
+          library.removeChild(recipeContainer);
+        })
     }
     })
 })
