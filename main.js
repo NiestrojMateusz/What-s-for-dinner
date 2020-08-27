@@ -202,8 +202,8 @@ function recipeView(infoArray) {
     if(nutritionFacts[4] >= 0) {
       const fact = document.createElement('span');
       fact.classList.add('nutrition-fact');
-      fact.style.fontSize = '1.5rem';
-      fact.style.marginTop = '-10px';
+      // fact.style.fontSize = '1.5rem';
+      // fact.style.marginTop = '-10px';
       fact.innerHTML = `<span class="score" style="font-weight:bold;font-size:1.8rem">${nutritionFacts[4]}</span> Health Score `;
       recipeNutrition.appendChild(fact);
     };
@@ -228,6 +228,7 @@ function recipeView(infoArray) {
         const savedLink = document.createElement('a');
         savedLink.classList.add('saved-link');
         savedLink.setAttribute('href', infoArray[index].sourceUrl);
+        savedLink.setAttribute('target', '_blank');
         savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
         savedRecipe.appendChild(savedLink);
         const deleteSaved = document.createElement('button');
