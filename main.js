@@ -6,6 +6,7 @@ const searchBtn = document.querySelector('.search');
 const revealButton = document.querySelector('.reveal-input');
 const recipesContainer = document.querySelector('.recipes-container');
 const hamburgerBtn = document.querySelector('.hamburger');
+const library = document.querySelector('.library');
 
 const test = {}
 
@@ -88,7 +89,7 @@ function recipeView(infoArray) {
   recipesContainer.innerHTML = '';
   
   
-  infoArray.forEach(info => {
+  infoArray.forEach((info,index) => {
     const recipeSection = document.createElement('section');
     recipeSection.classList.add('recipe');
     recipesContainer.appendChild(recipeSection);
@@ -136,6 +137,7 @@ function recipeView(infoArray) {
     const transfer = document.createElement('div');
     transfer.classList.add('transfer-recipe');
     const libraryIcon = document.createElement('button');
+    libraryIcon.classList.add(`add-recipe`, `recipe${index}`);
     libraryIcon.innerHTML = '<i class="fas fa-plus"></i>';
     const libraryDesc = document.createElement('p');
     libraryDesc.innerText = 'Add to library';
@@ -205,7 +207,35 @@ function recipeView(infoArray) {
       fact.innerHTML = `<span class="score" style="font-weight:bold;font-size:1.8rem">${nutritionFacts[4]}</span> Health Score `;
       recipeNutrition.appendChild(fact);
     };
+
   });
+  const buttonsToSave = document.querySelectorAll('.add-recipe');
+  buttonsToSave.forEach((btn, index) => {
+    btn.addEventListener('click', e => {
+      let buttonTarget = (e.target.parentElement.parentElement)
+      if(buttonTarget.classList.contains(`recipe${index}`)) {
+        
+        console.log(buttonTarget);
+      
+        const savedRecipe = document.createElement('div');
+        savedRecipe.classList.add('saved-recipe');
+        library.appendChild(savedRecipe);
+        const savedImg = document.createElement('img');
+        savedImg.classList.add('saved-img');
+        savedImg.setAttribute('src', infoArray[index].image);
+        savedRecipe.appendChild(savedImg);
+        const savedTitle = document.createElement('p');
+        savedTitle.classList.add('saved-title');
+        savedTitle.innerText = infoArray[index].title;
+        savedRecipe.appendChild(savedTitle);
+        const savedLink = document.createElement('a');
+        savedLink.classList.add('saved-link');
+        savedLink.setAttribute('href', infoArray[index].sourceUrl);
+        savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
+        savedRecipe.appendChild(savedLink);
+    }
+    })
+})
 }
 
 function libraryReveal() {
@@ -213,6 +243,8 @@ function libraryReveal() {
   const line2 = document.querySelector('.line2');
   line1.classList.toggle('line1-active');
   line2.classList.toggle('line2-active');
+  const library = document.querySelector('.library');
+  library.classList.toggle('library-active');
 }
 
 recipeView([data]);
