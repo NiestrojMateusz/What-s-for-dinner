@@ -6,7 +6,7 @@ const searchBtn = document.querySelector('.search');
 const revealButton = document.querySelector('.reveal-input');
 const recipesContainer = document.querySelector('.recipes-container');
 const hamburgerBtn = document.querySelector('.hamburger');
-const library = document.querySelector('.library');
+const library = document.querySelector('.library-recipes');
 
 const test = {}
 
@@ -79,9 +79,9 @@ const getRecipesInfo = async arrayId => {
 // Changing view to searched recipes
 
 function revealRecpies() {
+  // apiFunc();
   searchInput.value = '';
   recipesContainer.innerHTML = '';
-  // apiFunc();
 }
 
 function recipeView(infoArray) {
@@ -94,10 +94,10 @@ function recipeView(infoArray) {
     recipeSection.classList.add('recipe');
     recipesContainer.appendChild(recipeSection);
 
-    const recipeImg = document.createElement('div');
+    const recipeImg = document.createElement('img');
     recipeImg.classList.add('recipe-img');
-    let url = info.image;
-    recipeImg.style.backgroundImage = `url("${url}")`;
+    // recipeImg.setAttribute = ('src', info.image);
+    recipeImg.style.content = `url(${info.image})`
     recipeSection.appendChild(recipeImg);
 
     const recipeInfo = document.createElement('div');
@@ -134,15 +134,10 @@ function recipeView(infoArray) {
     link.setAttribute('target', "_blank");
     link.innerHTML = `<i class="fas fa-link"></i> Go to recipe`;
 
-    const transfer = document.createElement('div');
+    const transfer = document.createElement('button');
     transfer.classList.add('transfer-recipe');
-    const libraryIcon = document.createElement('button');
-    libraryIcon.classList.add(`add-recipe`, `recipe${index}`);
-    libraryIcon.innerHTML = '<i class="fas fa-plus"></i>';
-    const libraryDesc = document.createElement('p');
-    libraryDesc.innerText = 'Add to library';
-    transfer.appendChild(libraryIcon);
-    transfer.appendChild(libraryDesc);
+    transfer.classList.add(`add-recipe`, `recipe${index}`);
+    transfer.innerHTML = '<i class="fas fa-plus"></i> Add to library';
     recipeLink.appendChild(transfer);
     recipeInfo.appendChild(recipeLink);
 
@@ -212,7 +207,7 @@ function recipeView(infoArray) {
   const buttonsToSave = document.querySelectorAll('.add-recipe');
   buttonsToSave.forEach((btn, index) => {
     btn.addEventListener('click', e => {
-      let buttonTarget = (e.target.parentElement.parentElement)
+      let buttonTarget = e.target;
       if(buttonTarget.classList.contains(`recipe${index}`)) {
         const savedRecipe = document.createElement('div');
         savedRecipe.classList.add('saved-recipe');
