@@ -7,6 +7,8 @@ const revealButton = document.querySelector('.reveal-input');
 const recipesContainer = document.querySelector('.recipes-container');
 const hamburgerBtn = document.querySelector('.hamburger');
 const library = document.querySelector('.library-recipes');
+let recipesStorage = JSON.parse(localStorage.getItem('savedRecipes')) || [];
+
 
 const test = {}
 
@@ -24,7 +26,6 @@ function animateSearch(e) {
 
 const apiKey = "&apiKey=194c879ee3354f51bfca24dfb859cd08";
 let recipesId= [];
-
 async function apiFunc() {
   // Add loading animation
 
@@ -46,7 +47,8 @@ async function apiFunc() {
   const recipes = data.results;
 
   // Get recipe ID
- 
+  recipesId = [];
+  console.log(recipesId)
   recipes.forEach(recipe => {
     let id = recipe.id;
     recipesId.push(id);
@@ -79,15 +81,14 @@ const getRecipesInfo = async arrayId => {
 // Changing view to searched recipes
 
 function revealRecpies() {
-  // apiFunc();
-  searchInput.value = '';
   recipesContainer.innerHTML = '';
+  // apiFunc();
+  
 }
 
 function recipeView(infoArray) {
   
   recipesContainer.innerHTML = '';
-  
   
   infoArray.forEach((info,index) => {
     const recipeSection = document.createElement('section');
@@ -96,7 +97,6 @@ function recipeView(infoArray) {
 
     const recipeImg = document.createElement('img');
     recipeImg.classList.add('recipe-img');
-    // recipeImg.setAttribute = ('src', info.image);
     recipeImg.style.content = `url(${info.image})`
     recipeSection.appendChild(recipeImg);
 
@@ -136,7 +136,13 @@ function recipeView(infoArray) {
 
     const transfer = document.createElement('button');
     transfer.classList.add('transfer-recipe');
-    transfer.classList.add(`add-recipe`, `recipe${index}`);
+    console.log(recipesStorage)
+    if(recipesStorage.length > 0) {
+      let indexOfrecipe = recipesStorage.length + index;
+      transfer.classList.add(`add-recipe`, `recipe${indexOfrecipe}`);
+    } else {
+      transfer.classList.add(`add-recipe`, `recipe${index}`);
+    }
     transfer.innerHTML = '<i class="fas fa-plus"></i> Add to library';
     recipeLink.appendChild(transfer);
     recipeInfo.appendChild(recipeLink);
@@ -197,18 +203,56 @@ function recipeView(infoArray) {
     if(nutritionFacts[4] >= 0) {
       const fact = document.createElement('span');
       fact.classList.add('nutrition-fact');
-      // fact.style.fontSize = '1.5rem';
+      fact.style.lineHeight = '1';
       // fact.style.marginTop = '-10px';
       fact.innerHTML = `<span class="score" style="font-weight:bold;font-size:1.8rem">${nutritionFacts[4]}</span> Health Score `;
       recipeNutrition.appendChild(fact);
     };
-
   });
+
+  const storage = JSON.parse(localStorage.getItem('savedRecipes'));
+  if(storage.length > 0 ) {
+    storage.forEach(recipeObject => {
+      const savedRecipe = document.createElement('div');
+      savedRecipe.classList.add('saved-recipe');
+      library.appendChild(savedRecipe);
+      const savedImg = document.createElement('img');
+      savedImg.classList.add('saved-img');
+      savedImg.setAttribute('src', recipeObject.img);
+      savedRecipe.appendChild(savedImg);
+      const savedTitle = document.createElement('p');
+      savedTitle.classList.add('saved-title');
+      savedTitle.innerText = recipeObject.name;
+      savedRecipe.appendChild(savedTitle);
+      const savedLink = document.createElement('a');
+      savedLink.classList.add('saved-link');
+      savedLink.setAttribute('href', recipeObject.url);
+      savedLink.setAttribute('target', '_blank');
+      savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
+      savedRecipe.appendChild(savedLink);
+      const deleteSaved = document.createElement('button');
+      deleteSaved.classList.add('delete-saved');
+      deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
+      savedRecipe.appendChild(deleteSaved);
+      deleteSaved.addEventListener('click', e => {
+            const recipeContainer = e.target.parentElement.parentElement.parentElement;
+            library.removeChild(recipeContainer);
+    })
+    })
+  };
+   
+  
   const buttonsToSave = document.querySelectorAll('.add-recipe');
   buttonsToSave.forEach((btn, index) => {
+    let indexOfrecipe;
+    if(recipesStorage.length > 0) {
+      indexOfrecipe = recipesStorage.length + index;
+    } else {
+      indexOfrecipe = index;
+    }
     btn.addEventListener('click', e => {
       let buttonTarget = e.target;
-      if(buttonTarget.classList.contains(`recipe${index}`)) {
+      if(buttonTarget.classList.contains(`recipe${indexOfrecipe}`)) {
         const savedRecipe = document.createElement('div');
         savedRecipe.classList.add('saved-recipe');
         library.appendChild(savedRecipe);
@@ -230,13 +274,27 @@ function recipeView(infoArray) {
         deleteSaved.classList.add('delete-saved');
         deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
         savedRecipe.appendChild(deleteSaved);
+        addToStorage(infoArray[index].image, infoArray[index].title,infoArray[index].sourceUrl )
         deleteSaved.addEventListener('click', e => {
           const recipeContainer = e.target.parentElement.parentElement.parentElement;
           library.removeChild(recipeContainer);
         })
+        
     }
     })
 })
+searchInput.value = '';
+}
+
+function addToStorage(image, title, link) {
+  let recipeSaved = {
+    img : image,
+    name : title,
+    url : link,
+  }
+  recipesStorage.push(recipeSaved);
+  localStorage.setItem('savedRecipes', JSON.stringify(recipesStorage));
+  const storage = JSON.parse(localStorage.getItem('savedRecipes'));
 }
 
 function libraryReveal() {
