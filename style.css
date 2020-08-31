@@ -86,7 +86,7 @@ body {
   top: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(117,175,98,1) 39%, rgba(55,132,48,1) 69%, rgba(12,99,17,1) 100%);  
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.959) 0%, rgba(117, 175, 98, 0.932) 39%, rgba(55, 132, 48, 0.925) 69%, rgba(12,99,17,1) 100%);  
   z-index: 3;
   transform: translateX(460px);
   transition: transform 1s ease-in-out;
