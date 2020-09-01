@@ -211,33 +211,34 @@ function recipeView(infoArray) {
   });
 
   const storage = JSON.parse(localStorage.getItem('savedRecipes'));
-  if(storage.length > 0 ) {
-    storage.forEach(recipeObject => {
-      const savedRecipe = document.createElement('div');
-      savedRecipe.classList.add('saved-recipe');
-      library.appendChild(savedRecipe);
-      const savedImg = document.createElement('img');
-      savedImg.classList.add('saved-img');
-      savedImg.setAttribute('src', recipeObject.img);
-      savedRecipe.appendChild(savedImg);
-      const savedTitle = document.createElement('p');
-      savedTitle.classList.add('saved-title');
-      savedTitle.innerText = recipeObject.name;
-      savedRecipe.appendChild(savedTitle);
-      const savedLink = document.createElement('a');
-      savedLink.classList.add('saved-link');
-      savedLink.setAttribute('href', recipeObject.url);
-      savedLink.setAttribute('target', '_blank');
-      savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
-      savedRecipe.appendChild(savedLink);
-      const deleteSaved = document.createElement('button');
-      deleteSaved.classList.add('delete-saved');
-      deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
-      savedRecipe.appendChild(deleteSaved);
-      deleteSaved.addEventListener('click', e => {
-            const recipeContainer = e.target.parentElement.parentElement.parentElement;
-            library.removeChild(recipeContainer);
-    })
+  if(storage) {
+    storage.forEach((recipeObject,index) => {
+      addRecipe(recipeObject);
+    //   const savedRecipe = document.createElement('div');
+    //   savedRecipe.classList.add('saved-recipe');
+    //   library.appendChild(savedRecipe);
+    //   const savedImg = document.createElement('img');
+    //   savedImg.classList.add('saved-img');
+    //   savedImg.setAttribute('src', recipeObject.img);
+    //   savedRecipe.appendChild(savedImg);
+    //   const savedTitle = document.createElement('p');
+    //   savedTitle.classList.add('saved-title');
+    //   savedTitle.innerText = recipeObject.name;
+    //   savedRecipe.appendChild(savedTitle);
+    //   const savedLink = document.createElement('a');
+    //   savedLink.classList.add('saved-link');
+    //   savedLink.setAttribute('href', recipeObject.url);
+    //   savedLink.setAttribute('target', '_blank');
+    //   savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
+    //   savedRecipe.appendChild(savedLink);
+    //   const deleteSaved = document.createElement('button');
+    //   deleteSaved.classList.add('delete-saved');
+    //   deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
+    //   savedRecipe.appendChild(deleteSaved);
+    //   deleteSaved.addEventListener('click', e => {
+    //         const recipeContainer = e.target.parentElement.parentElement.parentElement;
+    //         library.removeChild(recipeContainer);
+    // })
     })
   };
    
@@ -253,32 +254,36 @@ function recipeView(infoArray) {
     btn.addEventListener('click', e => {
       let buttonTarget = e.target;
       if(buttonTarget.classList.contains(`recipe${indexOfrecipe}`)) {
-        const savedRecipe = document.createElement('div');
-        savedRecipe.classList.add('saved-recipe');
-        library.appendChild(savedRecipe);
-        const savedImg = document.createElement('img');
-        savedImg.classList.add('saved-img');
-        savedImg.setAttribute('src', infoArray[index].image);
-        savedRecipe.appendChild(savedImg);
-        const savedTitle = document.createElement('p');
-        savedTitle.classList.add('saved-title');
-        savedTitle.innerText = infoArray[index].title;
-        savedRecipe.appendChild(savedTitle);
-        const savedLink = document.createElement('a');
-        savedLink.classList.add('saved-link');
-        savedLink.setAttribute('href', infoArray[index].sourceUrl);
-        savedLink.setAttribute('target', '_blank');
-        savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
-        savedRecipe.appendChild(savedLink);
-        const deleteSaved = document.createElement('button');
-        deleteSaved.classList.add('delete-saved');
-        deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
-        savedRecipe.appendChild(deleteSaved);
+        addRecipe(infoArray[index]);
+        console.log(infoArray[index]);
         addToStorage(infoArray[index].image, infoArray[index].title,infoArray[index].sourceUrl )
-        deleteSaved.addEventListener('click', e => {
-          const recipeContainer = e.target.parentElement.parentElement.parentElement;
-          library.removeChild(recipeContainer);
-        })
+
+        // const savedRecipe = document.createElement('div');
+        // savedRecipe.classList.add('saved-recipe');
+        // library.appendChild(savedRecipe);
+        // const savedImg = document.createElement('img');
+        // savedImg.classList.add('saved-img');
+        // savedImg.setAttribute('src', infoArray[index].image);
+        // savedRecipe.appendChild(savedImg);
+        // const savedTitle = document.createElement('p');
+        // savedTitle.classList.add('saved-title');
+        // savedTitle.innerText = infoArray[index].title;
+        // savedRecipe.appendChild(savedTitle);
+        // const savedLink = document.createElement('a');
+        // savedLink.classList.add('saved-link');
+        // savedLink.setAttribute('href', infoArray[index].sourceUrl);
+        // savedLink.setAttribute('target', '_blank');
+        // savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
+        // savedRecipe.appendChild(savedLink);
+        // const deleteSaved = document.createElement('button');
+        // deleteSaved.classList.add('delete-saved');
+        // deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
+        // savedRecipe.appendChild(deleteSaved);
+        // addToStorage(infoArray[index].image, infoArray[index].title,infoArray[index].sourceUrl )
+        // deleteSaved.addEventListener('click', e => {
+        //   const recipeContainer = e.target.parentElement.parentElement.parentElement;
+        //   library.removeChild(recipeContainer);
+        // })
         
     }
     })
@@ -286,11 +291,40 @@ function recipeView(infoArray) {
 searchInput.value = '';
 }
 
+function addRecipe(infoObject) {
+  console.log(infoObject)
+  const savedRecipe = document.createElement('div');
+  savedRecipe.classList.add('saved-recipe');
+  library.appendChild(savedRecipe);
+  const savedImg = document.createElement('img');
+  savedImg.classList.add('saved-img');
+  savedImg.setAttribute('src', infoObject.image);
+  savedRecipe.appendChild(savedImg);
+  const savedTitle = document.createElement('p');
+  savedTitle.classList.add('saved-title');
+  savedTitle.innerText = infoObject.title;
+  savedRecipe.appendChild(savedTitle);
+  const savedLink = document.createElement('a');
+  savedLink.classList.add('saved-link');
+  savedLink.setAttribute('href', infoObject.sourceUrl);
+  savedLink.setAttribute('target', '_blank');
+  savedLink.innerHTML = `<i class='fas fa-arrow-right'></i>`;
+  savedRecipe.appendChild(savedLink);
+  const deleteSaved = document.createElement('button');
+  deleteSaved.classList.add('delete-saved');
+  deleteSaved.innerHTML = "<i class='fas fa-trash'></i>";
+  savedRecipe.appendChild(deleteSaved);
+  deleteSaved.addEventListener('click', e => {
+    const recipeContainer = e.target.parentElement.parentElement.parentElement;
+    library.removeChild(recipeContainer);
+  })
+}
+
 function addToStorage(image, title, link) {
   let recipeSaved = {
-    img : image,
-    name : title,
-    url : link,
+    image : image,
+    title : title,
+    sourceUrl : link,
   }
   recipesStorage.push(recipeSaved);
   localStorage.setItem('savedRecipes', JSON.stringify(recipesStorage));
