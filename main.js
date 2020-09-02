@@ -1,17 +1,24 @@
 import { data } from './data.js';
 const title = document.querySelector('.title');
 const searchInput = document.querySelector('.title-show');
-const searchIcon = document.querySelector('.fa-search');
 const searchBtn = document.querySelector('.search');
 const revealButton = document.querySelector('.reveal-input');
 const recipesContainer = document.querySelector('.recipes-container');
 const hamburgerBtn = document.querySelector('.hamburger');
 const library = document.querySelector('.library-recipes');
+
 let recipesStorage = JSON.parse(localStorage.getItem('savedRecipes')) || [];
 let libraryIndex = 0;
+const test = {};
 
 
-const test = {}
+// Add recipe to library from local storage
+
+  if(recipesStorage) {
+    recipesStorage.forEach((recipeObject) => {
+      addRecipe(recipeObject);
+    })
+  }
 
 // Reveal searching input
 
@@ -21,13 +28,16 @@ function animateSearch(e) {
     span.style.display = 'none';
   });
      revealButton.style.display = 'none';
+     recipesContainer.style.display = 'flex';
 };
 
 // API download
 
 const apiKey = "&apiKey=194c879ee3354f51bfca24dfb859cd08";
 let recipesId= [];
-async function apiFunc() {
+
+
+async function getRecipesId() {
   // Add loading animation
 
   const loadIcon = document.createElement('i');
@@ -49,12 +59,11 @@ async function apiFunc() {
 
   // Get recipe ID
   recipesId = [];
-  console.log(recipesId)
   recipes.forEach(recipe => {
     let id = recipe.id;
     recipesId.push(id);
   });
-
+  // searchValue = '';
   getRecipesInfo(recipesId);
 };
 
@@ -83,7 +92,7 @@ const getRecipesInfo = async arrayId => {
 
 function revealRecpies() {
   recipesContainer.innerHTML = '';
-  apiFunc();
+  getRecipesId();
   
 }
 
@@ -136,12 +145,12 @@ function recipeView(infoArray) {
     link.innerHTML = `<i class="fas fa-link"></i> Go to recipe`;
 
     const transfer = document.createElement('button');
-    transfer.classList.add('transfer-recipe');
+    // transfer.classList.add('transfer-recipe');
     if(recipesStorage.length > 0) {
       let indexOfrecipe = recipesStorage.length + index;
-      transfer.classList.add(`add-recipe`, `recipe${indexOfrecipe}`);
+      transfer.classList.add('transfer-recipe',  `recipe${indexOfrecipe}`);
     } else {
-      transfer.classList.add(`add-recipe`, `recipe${index}`);
+      transfer.classList.add('transfer-recipe', `recipe${index}`);
     }
     transfer.innerHTML = '<i class="fas fa-plus"></i> Add to library';
     recipeLink.appendChild(transfer);
@@ -204,37 +213,31 @@ function recipeView(infoArray) {
       const fact = document.createElement('span');
       fact.classList.add('nutrition-fact');
       fact.style.lineHeight = '1';
-      // fact.style.marginTop = '-10px';
       fact.innerHTML = `<span class="score" style="font-weight:bold;font-size:1.8rem">${nutritionFacts[4]}</span> Health Score `;
       recipeNutrition.appendChild(fact);
     };
   });
-  };
-
-  const storage = JSON.parse(localStorage.getItem('savedRecipes'));
-  if(storage) {
-    storage.forEach((recipeObject) => {
-      addRecipe(recipeObject);
-    })
-
-  const buttonsToSave = document.querySelectorAll('.add-recipe');
+  
+  
+  const buttonsToSave = document.querySelectorAll('.transfer-recipe');
   buttonsToSave.forEach((btn, index) => {
-    let indexOfrecipe;
+    let indexOfRecipe;
     if(recipesStorage.length > 0) {
-      indexOfrecipe = recipesStorage.length + index;
+      indexOfRecipe = recipesStorage.length + index;
     } else {
-      indexOfrecipe = index;
+      indexOfRecipe = index;
     }
     btn.addEventListener('click', e => {
       let buttonTarget = e.target;
-      if(buttonTarget.classList.contains(`recipe${indexOfrecipe}`)) {
+      if(buttonTarget.classList.contains(`recipe${indexOfRecipe}`)) {
         addRecipe(infoArray[index]);
         addToStorage(infoArray[index].image, infoArray[index].title,infoArray[index].sourceUrl )
     }
     })
+    searchInput.value = '';
 })
-searchInput.value = '';
-}
+};
+
 
 function addRecipe(recipeObject) {
   
@@ -275,7 +278,6 @@ function addRecipe(recipeObject) {
     recipesStorage = newStorage;
     localStorage.setItem('savedRecipes', JSON.stringify(recipesStorage));
     library.removeChild(recipeContainer);
-
   })
 }
 

@@ -68,6 +68,8 @@ body {
   width: 40px;
   background-color: rgb(0, 0, 0);
   margin-bottom: 5px;
+  transform: rotate(0deg) translateX(0px) translateY(0px);
+  transition: transform 0.5s ease-in-out;
 }
 
 .line1-active {
@@ -86,7 +88,7 @@ body {
   top: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.959) 0%, rgba(117, 175, 98, 0.932) 39%, rgba(55, 132, 48, 0.925) 69%, rgba(12,99,17,1) 100%);  
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(117, 175, 98) 49%, rgba(55, 132, 48, 0.925) 69%, rgba(12,99,17,1) 100%);  
   z-index: 3;
   transform: translateX(460px);
   transition: transform 1s ease-in-out;
@@ -179,7 +181,7 @@ body {
 }
 
 .recipes-container {
-  display: flex;
+  display: none;
   flex-flow: row  wrap;
   justify-content: center;
   overflow: scroll;
@@ -353,16 +355,6 @@ body {
   to {transform: rotate(360deg);}
 }
 
-/* @keyframes hamburgerActive {
-  from {transform: translateX(5px);}
-  to {transform: translateX(-455px);}
-}
-
-@keyframes hamburger {
-  from {transform: translateX(-455px);}
-  to {transform: translateX(0px);}
-} */
-
 @media (max-width: 1270px) {
   .recipe-nutrition {
     flex-wrap: wrap;
@@ -370,9 +362,6 @@ body {
   .nutrition-fact {
     margin: 0;
   }
-  /* .hamburger {
-    right: 170px;
-  } */
 }
 
 @media (max-width: 1140px) {
